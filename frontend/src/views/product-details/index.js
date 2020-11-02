@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react'
 import { ListGroup, Row ,Col ,Image, Card, Button} from 'react-bootstrap';
-import {connect} from 'react-redux'
+import { useSelector, useDispatch} from 'react-redux'
 
 import {Link} from 'react-router-dom';
 import Rating from '../../components/rating';
 import {getProduct} from '../../actions/product'
 
-const ProductDetails = ({match ,getProduct , product,fetching,}) => {
+const ProductDetails = ({match,}) => {
     const id =match.params.id;
+    const dispatch = useDispatch();
+    const product = useSelector(state=>state.product.product);
+    const fetching = useSelector(state=>state.product.fetching);
     useEffect(()=>{
-        const fetchPoduct = async ()=>{
-            await getProduct(id);
-        }
-        fetchPoduct()
+       dispatch(getProduct(id))
        
     },[])
     return (
@@ -75,12 +75,6 @@ const ProductDetails = ({match ,getProduct , product,fetching,}) => {
         </>)
     )
 }
-const mapStateToProps = ({product})=>({
-    product :product.product,
-    fetching:product.fetching
-})
-const mapDispachToProps = dispach=>({
-    getProduct:(id)=>dispach(getProduct(id)),
-})
 
-export default connect(mapStateToProps , mapDispachToProps)(ProductDetails)
+
+export default ProductDetails;

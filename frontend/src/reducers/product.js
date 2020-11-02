@@ -3,7 +3,7 @@ const  initState = {
     products:[],
     fetching:false,
     product:{},
-    errors:[]
+    errors:null
 
 }
 const productReducer = (state=initState, action)=>{
@@ -11,7 +11,7 @@ const productReducer = (state=initState, action)=>{
         case GET_PRODUCTS:
             return{
                 ...state, 
-                products:[...state.products, ...action.payload],
+                products:action.payload,
             }
         case FETCHING_PRODUCTS_SUCCESS:
             return{

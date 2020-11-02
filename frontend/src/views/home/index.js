@@ -1,18 +1,18 @@
 import React ,{useState,useEffect}from 'react';
 import {Row ,Col} from 'react-bootstrap';
-import {connect} from 'react-redux'
+import {useDispatch,useSelector} from 'react-redux'
  import { getProducts } from '../../actions/product'
 import Product from '../product'
-const Home = ({products,getProducts,fetching}) => {
+const Home = () => {
+    const dispactch =useDispatch();
+    const product = useSelector(state => state.product);
+    const {fetching ,errors,products } = product
     useEffect(() => {
-        const fetchProducts = async ()=>{
-            await getProducts() ;  
-        }
-        fetchProducts();
+       dispactch(getProducts())
     }, [])
     return (
-        fetching?<h2 className='text-center'>Loading...</h2>:(
-        <>
+        fetching?(<h2 className='text-center'>Loading...</h2>):errors? (<h3> Error</h3>):
+        (<>
         <h3 className='text-center'>Latest Product</h3>
         <Row>  
             {products.map(product=>(
@@ -20,17 +20,8 @@ const Home = ({products,getProducts,fetching}) => {
             ))}
         </Row>
             
-        </>
-        ) 
+        </>) 
     )
 }
-const mapStateToProps = ({product})=>({
-    products:product.products,
-    fetching:product.fetching
-})
-const mapDispatchToProps = dispatch=>({
-    getProducts:()=>dispatch(getProducts()),
 
-    
-})
-export default connect(mapStateToProps,mapDispatchToProps)(Home);
+export default Home;
