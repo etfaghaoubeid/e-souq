@@ -1,11 +1,9 @@
 import React from 'react'
-import {connect} from 'react-redux';
-import { Card, Form } from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import { Card,  } from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap'
 import Rating from '../../components/rating'
 
-const Product = ({product,getProduct,}) => {
+const Product = ({product}) => {
     return (
         <Card className='my-3 p-3 rounded'>
             <LinkContainer to={`/product-details/${product._id}`}>

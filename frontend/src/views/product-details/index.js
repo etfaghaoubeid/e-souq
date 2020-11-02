@@ -4,19 +4,20 @@ import { useSelector, useDispatch} from 'react-redux'
 
 import {Link} from 'react-router-dom';
 import Rating from '../../components/rating';
-import {getProduct} from '../../actions/product'
+import {getProduct} from '../../actions/product-details'
+import Loader from '../../components/loader';
 
 const ProductDetails = ({match,}) => {
     const id =match.params.id;
     const dispatch = useDispatch();
-    const product = useSelector(state=>state.product.product);
-    const fetching = useSelector(state=>state.product.fetching);
+    const product = useSelector(state=>state.productDetails.product);
+    const fetching = useSelector(state=>state.productDetails.fetching);
     useEffect(()=>{
        dispatch(getProduct(id))
        
-    },[])
+    },[dispatch])
     return (
-        fetching?<h3>Loading ... </h3>:
+        fetching?<Loader/>:
         (<>
         <Link to ='/' className='btn btn-light my-3'> Go Back</Link>
             <Row>
@@ -66,7 +67,7 @@ const ProductDetails = ({match,}) => {
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
-                                    <Button className='btn btn-block' disabled={product.countInStock==0}>Add To Cart</Button>
+                                    <Button className='btn btn-block' disabled={product.countInStock===0}>Add To Cart</Button>
                             </ListGroup.Item>
                         </ListGroup>
                     </Card>
