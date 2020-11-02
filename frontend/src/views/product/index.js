@@ -1,10 +1,11 @@
 import React from 'react'
+import {connect} from 'react-redux';
 import { Card, Form } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {LinkContainer} from 'react-router-bootstrap'
 import Rating from '../../components/rating'
 
-const Product = ({product}) => {
+const Product = ({product,getProduct,}) => {
     return (
         <Card className='my-3 p-3 rounded'>
             <LinkContainer to={`/product-details/${product._id}`}>
@@ -35,5 +36,6 @@ const Product = ({product}) => {
         </Card>
     )
 }
+
 
 export default Product

@@ -10,7 +10,7 @@ const reviewSchema = new Schema({
     }, 
     comment:{
         type:String, 
-        required:true,
+       required:true,
 
     }
 },{timestamps:true})

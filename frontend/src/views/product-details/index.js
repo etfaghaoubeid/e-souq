@@ -1,16 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ListGroup, Row ,Col ,Image, Card, Button} from 'react-bootstrap';
+import {connect} from 'react-redux'
 
 import {Link} from 'react-router-dom';
 import Rating from '../../components/rating';
-import {products} from '../../products'
+import {getProduct} from '../../actions/product'
 
-const ProductDetails = (props) => {
-    const id =props.match.params.id;
-    const product = products.find(product=>product._id ===id)
-    console.log(product)
+const ProductDetails = ({match ,getProduct , product,fetching,}) => {
+    const id =match.params.id;
+    useEffect(()=>{
+        const fetchPoduct = async ()=>{
+            await getProduct(id);
+        }
+        fetchPoduct()
+       
+    },[])
     return (
-        <>
+        fetching?<h3>Loading ... </h3>:
+        (<>
         <Link to ='/' className='btn btn-light my-3'> Go Back</Link>
             <Row>
                 <Col md={6}>
@@ -30,13 +37,8 @@ const ProductDetails = (props) => {
                         <ListGroup.Item>
                            Description: {product.description}
                         </ListGroup.Item>
-                        
-
                     </ListGroup>
                     <ListGroup variant='flush'>
-                        
-                        
-
                     </ListGroup>
                 </Col>
                 <Col md={3}>
@@ -54,7 +56,6 @@ const ProductDetails = (props) => {
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
-                                
                                 <Row>
                                     <Col>
                                     Status: 
@@ -65,16 +66,21 @@ const ProductDetails = (props) => {
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
-                                
                                     <Button className='btn btn-block' disabled={product.countInStock==0}>Add To Cart</Button>
-
                             </ListGroup.Item>
                         </ListGroup>
                     </Card>
                 </Col>
             </Row>
-        </>
+        </>)
     )
 }
+const mapStateToProps = ({product})=>({
+    product :product.product,
+    fetching:product.fetching
+})
+const mapDispachToProps = dispach=>({
+    getProduct:(id)=>dispach(getProduct(id)),
+})
 
-export default ProductDetails
+export default connect(mapStateToProps , mapDispachToProps)(ProductDetails)

@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv')
 const productRoute = require('./routes/product');
+const {errorHandler,routeHandler} = require('./lib/middleware')
 const { connectToDB } = require('./config/db');
 
 dotenv.config()
@@ -10,9 +11,10 @@ const init = async (app)=>{
     await connectToDB()
     app.listen(process.env.PORT,()=>{
         console.log(`app start in ${process.env.NODE_ENV}`)
-    })
-    
+    })   
 app.use(express.json());
 app.use('/products',productRoute)
+app.use(routeHandler)
+app.use((errorHandler));
 }
 init(express())
