@@ -3,7 +3,7 @@ export const getProduct =(id)=>{
     return async dispatch=>{
         try {
             dispatch({type:START_FETCHING,payload:true});
-            const  res = await fetch(`/products/${id}`);
+            const  res = await fetch(`http://127.0.0.1:3333/products/${id}`);
             const data =await  res.json();
            dispatch({type:FETCHING_PRODUCT_SUCCESS,payload:{fetching:false,product:data}})
 

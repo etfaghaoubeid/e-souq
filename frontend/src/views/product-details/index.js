@@ -66,6 +66,18 @@ const ProductDetails = ({match,}) => {
                                     </Col>
                                 </Row>
                             </ListGroup.Item>
+                            {product.countInStock>0&&
+                                <ListGroup.Item>
+                                    <Row>
+                                    {[...Array(product.countInStock).keys()].map(item=>(
+                                        <option key={item+1} value={item+1}>
+                                         {item+1}
+                                        </option>
+                                    ))}
+                                    </Row>
+                                    
+                                </ListGroup.Item>
+                            }
                             <ListGroup.Item>
                                     <Button className='btn btn-block' disabled={product.countInStock===0}>Add To Cart</Button>
                             </ListGroup.Item>

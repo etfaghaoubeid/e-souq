@@ -6,7 +6,7 @@ import{
 export const getProducts =  ()=>{
     return async  dispatch=>{
             dispatch({type:START_FETCHING,payload:true});
-            const res = await fetch('/products');
+            const res = await fetch('http://127.0.0.1:3333/products');
             const data = await res.json();
             if(data.length){
                 dispatch({type:FETCHING_PRODUCTS_SUCCESS,payload:{fetching:false, products:data}});
