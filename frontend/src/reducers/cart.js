@@ -15,7 +15,6 @@ function decreaseQty(items , id){
 export default function cartReducer(state=initState, action){
     switch(action.type){
         case ADD_ITEM_TO_CART:
-            console.log('111111111111', action.payload)
             return{
                 ...state, 
                 itemsInCart:[...state.itemsInCart, action.payload]
@@ -29,7 +28,7 @@ export default function cartReducer(state=initState, action){
         case INCREASE_QUANTITY: 
             return{
                 ...state, 
-                itemsInCart:[...state.itemsInCart.map(item=>item.id !==action.payload?{...item, qty:item.qty+1}:item)]
+                itemsInCart:[...state.itemsInCart.map(item=>item.id ===action.payload?{...item, qty:item.qty+1}:item)]
 
             }
 
