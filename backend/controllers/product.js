@@ -13,7 +13,6 @@ exports.getProducts =asyncHandler(async (req, res)=>{
 });
 exports.getProduct = asyncHandler( async(req, res)=>{
         const id = req.params.id ;
-        console.log('requisted', id)
         const product = await Product.findById(id)
         if(!product){
             res.status(400)

@@ -9,7 +9,7 @@ import Loader from '../../components/loader';
 import { addToCart } from '../../actions/cart';
 
 const ProductDetails = ({match,history}) => {
-    const [qty , setQty] = useState(0)
+    const [qty , setQty] = useState(1)
     const id =match.params.id;
     const dispatch = useDispatch();
     const product = useSelector(state=>state.productDetails.product);
@@ -20,7 +20,7 @@ const ProductDetails = ({match,history}) => {
     },[dispatch])
 
     const addToCartHendler = ()=>{
-        dispatch(addToCart(product))
+        dispatch(addToCart(id,qty))
         history.push(`/cart/${id}?qty=${qty}`)
     }
     return (

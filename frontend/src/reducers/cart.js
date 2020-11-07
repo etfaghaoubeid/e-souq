@@ -3,12 +3,13 @@ import { ADD_ITEM_TO_CART, DECREASE_QUANTITY, INCREASE_QUANTITY, REMOVE_ITEM_FRO
 const initState = {
     itemsInCart:[],
 }
-function decreaseQty(items , id){
-       const product =  items.find(item=>item.id ===id);
+function decreaseQty(items , _id){
+       const product =  items.find(item=>item._id ==_id);
        if(product.qty>1){
-           return items.map(item=>item.id ===product.id?{...item , qty:item.qty-1}:item)
+           return items.map(item=>item._id ===product._id?{...item , qty:item.qty-1}:item)
        }
-       return items.filter(item=>item.id !==product.id)
+       removeItemFromLocalStorage(_id);
+       return items.filter(item=>item._id !==product._id)
 
 }
 function addItem(items, itemToAdd){
@@ -18,6 +19,12 @@ function addItem(items, itemToAdd){
    }else{
        return [...items , itemToAdd]
    }
+}
+function removeItemFromLocalStorage (_id){
+        let localItems = JSON.parse( localStorage.getItem('itemsInCart'))
+            localItems = localItems.filter(item=>item._id !==_id)
+            localStorage.setItem('itemsInCart' , JSON.stringify(localItems))
+
 }
 
 export default function cartReducer(state=initState, action){
@@ -30,14 +37,15 @@ export default function cartReducer(state=initState, action){
             }
 
         case REMOVE_ITEM_FROM_CART:
+            removeItemFromLocalStorage(action.payload)
             return{
                 ...state, 
-                itemsInCart:[...state.itemsInCart.filter(item=>item.id !==action.payload?{...item, qty:item.qty+1}:{...item , qty:1})]
+                itemsInCart:state.itemsInCart.filter(item=>item._id !==action.payload)
             }  
         case INCREASE_QUANTITY: 
             return{
                 ...state, 
-                itemsInCart:[...state.itemsInCart.map(item=>item.id ===action.payload?{...item, qty:item.qty+1}:item)]
+                itemsInCart:[...state.itemsInCart.map(item=>item._id ===action.payload?{...item, qty:item.qty+1}:item)]
 
             }
 
