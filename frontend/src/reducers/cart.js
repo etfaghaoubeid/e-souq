@@ -11,13 +11,22 @@ function decreaseQty(items , id){
        return items.filter(item=>item.id !==product.id)
 
 }
+function addItem(items, itemToAdd){
+   const existItem = items.find(item=>item._id ===itemToAdd._id);
+   if(existItem){
+       return items
+   }else{
+       return [...items , itemToAdd]
+   }
+}
 
 export default function cartReducer(state=initState, action){
     switch(action.type){
         case ADD_ITEM_TO_CART:
+            console.log('payload add item to cart ', action.payload._id)
             return{
                 ...state, 
-                itemsInCart:[...state.itemsInCart, action.payload]
+                itemsInCart:addItem(state.itemsInCart , action.payload),
             }
 
         case REMOVE_ITEM_FROM_CART:
