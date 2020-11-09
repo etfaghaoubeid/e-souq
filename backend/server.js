@@ -15,7 +15,8 @@ const init = async (app)=>{
     })   
 app.use(express.json());
 app.use(cors())
-app.use('/products',productRoute)
+app.use('/products',productRoute);
+app.use('user', require('./routes/user'));
 app.use(routeHandler)
 app.use((errorHandler));
 }

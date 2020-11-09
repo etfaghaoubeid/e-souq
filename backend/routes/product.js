@@ -1,4 +1,5 @@
-const {Router} = require('express')
+const {Router} = require('express');
+const User = require('../models/user')
 const {getProducts, getProduct,createProduct,deleteProduct, updateProduct}  = require('../controllers/product')
 
 const router = Router()
