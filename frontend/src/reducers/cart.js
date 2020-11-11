@@ -22,8 +22,8 @@ function addItem(items, itemToAdd){
 }
 function removeItemFromLocalStorage (_id){
         let localItems = JSON.parse( localStorage.getItem('itemsInCart'))
-            localItems = localItems.filter(item=>item._id !==_id)
-            localStorage.setItem('itemsInCart' , JSON.stringify(localItems))
+        localItems = localItems.filter(item=>item._id !==_id)
+        localStorage.setItem('itemsInCart' , JSON.stringify(localItems))
 
 }
 
