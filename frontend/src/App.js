@@ -8,6 +8,7 @@ import SignIn from './components/signin'
 import ProductDetails from './views/product-details';
 import Cart from './views/cart';
 import Login from './views/login';
+import Register from './views/register';
 
 
 function App() {
@@ -19,7 +20,8 @@ function App() {
       <main className='py-3' >
         <Container>
           <Route exact path= '/' component={Home}/>
-          <Route path= '/sign-in' component={Login}/>
+          <Route path= '/login' component={Login}/>
+          <Route path='/register' component={Register}/>
           <Route path= '/product-details/:id' component={ProductDetails}/>
           <Route path='/cart/:id?' component={Cart}/>
         </Container>

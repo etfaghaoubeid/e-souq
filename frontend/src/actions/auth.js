@@ -1,4 +1,4 @@
-import {LOGIN_SUCCESS, FAIL_TO_LOGIN, LOGIN_REQUEST_START} from '../action-types/auth'
+import {LOGIN_SUCCESS, FAIL_TO_LOGIN, LOGIN_REQUEST_START, REGISTER_REQUEST_START, REGISTER_SUCCESS, FAIL_TO_REGISTER} from '../action-types/auth'
 export const login= (user)=> async (dispatch)=>{
     dispatch({type:LOGIN_REQUEST_START, payload:true})
     const requestOption = {
@@ -21,4 +21,40 @@ export const login= (user)=> async (dispatch)=>{
 
     })
     
+}
+export const register = (user)=>{
+    return async (dispatch)=>{
+        dispatch({
+            type:REGISTER_REQUEST_START, 
+            payload:true,
+        });
+        const configRequest = {
+            method:'POST', 
+            headers:{
+                'Content-type':'application/json'
+            }, 
+            body:JSON.stringify(user)
+
+        }
+        const res = await fetch('http://localhost:3333/user/register', configRequest);
+        const data = await res.json();
+        console.log(data , ' register actions')
+        if(data && data.name){
+             return dispatch({
+                type:REGISTER_SUCCESS, 
+                payload:{
+                    user:data, 
+                    isLoading:false
+                }
+            })
+        }
+        return dispatch({
+            type:FAIL_TO_REGISTER, 
+            payload:{
+                error:data, 
+                isLoading:false
+            }
+        })
+
+    }
 }
