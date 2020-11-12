@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { register } from '../../actions/auth';
 
 
-const  Register= ()=> {
+const  Register= ({history})=> {
     const [email , setEmail] = useState('');
     const [name , setName] = useState('');
     const [password, setPassword] = useState('');
@@ -23,7 +23,8 @@ const  Register= ()=> {
     }
     const registerHandler= (event)=>{
         event.preventDefault();
-       dispatch( register({email ,name , password}))
+       dispatch( register({email ,name , password}));
+       history.push('/login')
         
     }
     return (

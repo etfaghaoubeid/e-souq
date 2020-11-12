@@ -2,8 +2,9 @@ import {createStore ,applyMiddleware} from 'redux'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import rootReducer from './rootReducer';
 import thunk from 'redux-thunk';
+import { getLocalStorageItem } from './utils/localStorage';
 const middleware = [thunk ]
-const userInfo = JSON.parse( localStorage.getItem('userInfo')) ||{}
+const  userInfo = getLocalStorageItem('userInfo')? getLocalStorageItem('userInfo'):''
 
 const itemsInCart = JSON.parse( localStorage.getItem('itemsInCart')) || []
 const initSatate ={

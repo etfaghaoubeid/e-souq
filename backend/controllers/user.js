@@ -34,6 +34,23 @@ exports.register = asyncHandler( async(req, res)=>{
     return res.status(201).json(savedUser)
 
 });
+exports.updateProfile = asyncHandler(async (req, res)=>{
+    const {email, password, name } = req.body;
+    const user = await User.findOne({_id:req.user._id});
+    if(user){
+        user.name = name || user.name, 
+        user.email = email  || user.email
+    }
+    if(password){
+        user.password = password 
+    }
+    const savedUser = await user.save();
+    if(savedUser ){
+        return res.status(201).json(savedUser)
+    }
+    return res.status(404).json({message:'some things went wrong'})
+
+})
 exports.getProfile = asyncHandler(async (req, res)=>{
     const user = await User.findById(req.user._id).select('-password')
     if(user){

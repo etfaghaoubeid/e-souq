@@ -4,11 +4,12 @@ import {Route}  from 'react-router-dom'
 import Footer from './components/footer';
 import Header from './components/header';
 import Home from './views/home'
-import SignIn from './components/signin'
 import ProductDetails from './views/product-details';
 import Cart from './views/cart';
 import Login from './views/login';
 import Register from './views/register';
+import Profile from './views/profile'
+
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route exact path= '/' component={Home}/>
           <Route path= '/login' component={Login}/>
           <Route path='/register' component={Register}/>
+          <Route path='/profile' component={Profile}/>
           <Route path= '/product-details/:id' component={ProductDetails}/>
           <Route path='/cart/:id?' component={Cart}/>
         </Container>

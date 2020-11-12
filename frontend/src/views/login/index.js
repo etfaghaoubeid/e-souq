@@ -6,13 +6,17 @@ import { login } from '../../actions/auth';
 
 import {Link} from 'react-router-dom';
 import FormContainer from '../../components/form-container';
+import Message from '../../components/message';
+import Loader from '../../components/loader'
+import FormGroupComponent from '../../components/form-group'
 
-function Login({location}) {
+function Login({location, history}) {
     const auth = useSelector(state=>state.auth);
+    const {error , isLoading , userInfo} = auth
     const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password , setPassword] = useState('');
-    const redirect = location.search.split('=')[1]
+    const redirect = location.search? location.search.split('=')[1] :'/'
 
     const loginHandler = (event)=>{
         event.preventDefault();
@@ -24,24 +28,33 @@ function Login({location}) {
     const passwordChangeHandler = event=>{
         setPassword(event.target.value);
     }
-    
+    useEffect(()=>{
+        if(userInfo){
+           history.push(redirect)
+        }
+
+    },[userInfo , redirect])
     return (
         <FormContainer>
+            {error&& <Message variant='danger'>{error}</Message>}
+            {isLoading&& <Loader/>}
             <h2>Sign In</h2>
             <Form onSubmit={loginHandler}>
-                <Form.Group>
-                    <Form.Label controlId='email'>
-                        Email Address
-                    </Form.Label>
-                    <Form.Control   placeholder='Enter you Email' type='email' value={email} onChange={emailChangeHandler}>
-
-                    </Form.Control>
-                </Form.Group>
+                <FormGroupComponent label='Email'
+                 id='email' type='email'
+                  value={email} 
+                  handleChange={emailChangeHandler}
+                  placeholder='Enter your Email'/>
+                
                 <Form.Group>
                     <Form.Label controlId='password'>
                         Password
                     </Form.Label>
-                    <Form.Control placeholder='Enter you Password' type='password' value={password} onChange={passwordChangeHandler}>
+                    <Form.Control 
+                    placeholder='Enter you Password'
+                     type='password' 
+                     value={password} 
+                     onChange={passwordChangeHandler}>
 
                     </Form.Control>
                 </Form.Group>
@@ -51,7 +64,9 @@ function Login({location}) {
             </Form>
             <Row className='my-3'>
                 <Col>
-                New Customer ? <Link to={redirect? `/register?redirect=${redirect}`:'/register'}>Reguster</Link>
+                New Customer ?
+                 <Link to={redirect? `/register?redirect=${redirect}`: 
+                 '/register'}>Reguster</Link>
                 </Col>
             </Row>
 

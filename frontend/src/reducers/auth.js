@@ -2,14 +2,14 @@ import {FAIL_TO_LOGIN,
      FAIL_TO_REGISTER,
      LOGIN_REQUEST_START,
       LOGIN_SUCCESS, 
+      LOGOUT, 
       REGISTER_REQUEST_START, 
       REGISTER_SUCCESS} from '../action-types/auth'
 const initSatate = {
     isLoading:false,
     isLogin:false , 
-    error:''
 }
-export default function authReducer(state =initSatate, action){
+export default function authReducer(state =initSatate, action){  
     switch(action.type){
         case LOGIN_REQUEST_START:
             return{
@@ -46,6 +46,12 @@ export default function authReducer(state =initSatate, action){
                 ...state, 
                 isLoading:action.payload.isLoading,
                 error:action.payload.error
+            }    
+        case LOGOUT:
+            return{
+                ...state, 
+                isLogin:action.payload.isLogin,
+                userInfo:null
             }    
         default:
             return state;    
