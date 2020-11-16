@@ -13,12 +13,16 @@ export const login= (user)=> async (dispatch)=>{
         setLocalStorageItem(data, 'userInfo');
         return dispatch({
             type:LOGIN_SUCCESS, 
-            payload:{user:data , isLogin:true,isLoding:false}
+            payload:{userInfo:data , isLogin:true,isLoding:false}
         })
     }
     return dispatch({
         type:FAIL_TO_LOGIN,
-        payload:data
+        payload: {
+            isLoading: false,
+            isLogin:false,
+            error:data.message
+        }
 
     })
     
@@ -40,19 +44,23 @@ export const register = (user)=>{
         const res = await fetch('http://localhost:3333/user/register', configRequest);
         const data = await res.json();
         if(data && data.name){
-            setLocalStorageItem(data , 'user')
-             return dispatch({
+            setLocalStorageItem(data , 'userInfo')
+             dispatch({
                 type:REGISTER_SUCCESS, 
                 payload:{
                     user:data, 
                     isLoading:false
                 }
+             })
+             return dispatch({
+                type:LOGIN_SUCCESS, 
+                payload:{userInfo:data , isLogin:true,isLoding:false}
             })
         }
         return dispatch({
             type:FAIL_TO_REGISTER, 
             payload:{
-                error:data, 
+                error:data.message, 
                 isLoading:false
             }
         })

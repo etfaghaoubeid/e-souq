@@ -20,14 +20,15 @@ export default function authReducer(state =initSatate, action){
         case LOGIN_SUCCESS:
             return{
                 ...state, 
-                userInfo:action.payload.user,
+                userInfo:action.payload.userInfo,
                 isLogin:action.payload.isLogin,
                 isLoading:action.payload.isLoading
             }
         case FAIL_TO_LOGIN:
             return{
                 ...state, 
-                error:action.payload,
+                isLoading:action.payload.isLoading,
+                error:action.payload.error,
             }  
         case REGISTER_REQUEST_START:
             return{

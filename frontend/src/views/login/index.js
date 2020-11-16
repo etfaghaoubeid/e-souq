@@ -33,7 +33,7 @@ function Login({location, history}) {
            history.push(redirect)
         }
 
-    },[userInfo , redirect])
+    },[userInfo , redirect,history])
     return (
         <FormContainer>
             {error&& <Message variant='danger'>{error}</Message>}
@@ -41,26 +41,20 @@ function Login({location, history}) {
             <h2>Sign In</h2>
             <Form onSubmit={loginHandler}>
                 <FormGroupComponent label='Email'
-                 id='email' type='email'
+                  id='email' type='email'
                   value={email} 
                   handleChange={emailChangeHandler}
-                  placeholder='Enter your Email'/>
-                
-                <Form.Group>
-                    <Form.Label controlId='password'>
-                        Password
-                    </Form.Label>
-                    <Form.Control 
-                    placeholder='Enter you Password'
-                     type='password' 
-                     value={password} 
-                     onChange={passwordChangeHandler}>
-
-                    </Form.Control>
-                </Form.Group>
+                    placeholder='Enter your Email'
+                />
+                <FormGroupComponent
+                    label='Password'
+                    id='password'
+                    type='password'
+                    value={password} 
+                    handleChange={passwordChangeHandler}
+                    placeholder='Enter your password'
+                />
                 <Button type='submit' variant='primary'> Login</Button>
-
-
             </Form>
             <Row className='my-3'>
                 <Col>
