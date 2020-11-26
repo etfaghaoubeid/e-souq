@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import {useDispatch , useSelector} from 'react-redux';
 import Message from '../../components/message';
-import Loader from '../../components/loader';
+// import Loader from '../../components/loader';
 import { Button, Col, Form,  Row } from 'react-bootstrap';
 import { updateProfile } from '../../actions/auth';
 
-const Profile =()=> {
+const Profile =({history})=> {
     const [name, setName ] = useState('');
     const [email, setEmail]= useState('');
     const [password, setPassword] = useState('');
@@ -29,8 +29,10 @@ const Profile =()=> {
     
     const handleSubmit =(event)=>{
         event.preventDefault();
+        console.log(userInfo.token)
         if( password && password ===confimePassword){
-            return dispatch(updateProfile({name , email, password, token: userInfo.token}))
+            dispatch(updateProfile({ name, email, password }, userInfo.token));
+            history.push('/profile')
         }else{
             setMessage('Password does not match')
         }
@@ -41,7 +43,8 @@ const Profile =()=> {
             setEmail(userInfo.email)
         }
 
-    },[] )
+    }, [])
+    // console.log('user info for update profile', userInfo)
 
     return (
         <Row>

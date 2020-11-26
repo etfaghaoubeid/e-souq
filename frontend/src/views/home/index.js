@@ -8,7 +8,6 @@ import Product from '../product'
 const Home = () => {
     const dispactch =useDispatch();
     const productList = useSelector(state => state.productList);
-    console.log(productList)
     const {fetching ,error,products } = productList
     useEffect(() => {
        dispactch(getProducts()); 

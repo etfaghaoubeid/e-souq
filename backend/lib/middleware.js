@@ -1,5 +1,5 @@
 exports.errorHandler = (err , req, res, next)=>{
-    console.log(res.statusCode)
+    
     const statusCode  = res.status  ===200 ? 500: res.statusCode;
     res.status(statusCode);
     res.json({

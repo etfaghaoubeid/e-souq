@@ -5,7 +5,6 @@ const { generateToken } = require('../utils/generate-token');
 
 exports.login = asyncHandler( async(req, res)=>{
     const {email , password}= req.body
-    console.log("login")
     const user =await User.findOne({email});
     if(user && (await user.comparePassword(password))){
         return res.status(200).json({
@@ -45,7 +44,8 @@ exports.updateProfile = asyncHandler(async (req, res)=>{
         user.password = password 
     }
     const savedUser = await user.save();
-    if(savedUser ){
+    if (savedUser) {
+        
         return res.status(201).json(savedUser)
     }
     return res.status(404).json({message:'some things went wrong'})

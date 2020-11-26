@@ -1,6 +1,7 @@
 export const updateLocalStorageItem = (value, itemToUpdate)=>{
-   localStorage.removeItem(itemToUpdate) ;
-  return JSON.parse(localStorage.setItem(itemToUpdate, JSON.stringify(value)));
+  localStorage.removeItem(itemToUpdate);
+  
+  localStorage.setItem(itemToUpdate, JSON.stringify(value));
     
 }
 export const setLocalStorageItem = (value , itemName)=>{

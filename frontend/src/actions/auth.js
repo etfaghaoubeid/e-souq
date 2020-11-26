@@ -45,17 +45,17 @@ export const register = (user)=>{
         const data = await res.json();
         if(data && data.name){
             setLocalStorageItem(data , 'userInfo')
-             dispatch({
-                type:REGISTER_SUCCESS, 
-                payload:{
-                    user:data, 
-                    isLoading:false
+            dispatch({
+                type: REGISTER_SUCCESS,
+                payload: {
+                    user: data,
+                    isLoading: false
                 }
-             })
-             return dispatch({
-                type:LOGIN_SUCCESS, 
-                payload:{userInfo:data , isLogin:true,isLoding:false}
-            })
+            });
+            return dispatch({
+                type: LOGIN_SUCCESS,
+                payload: { userInfo: data, isLogin: true, isLoding: false }
+            });
         }
         return dispatch({
             type:FAIL_TO_REGISTER, 
@@ -67,7 +67,7 @@ export const register = (user)=>{
 
     }
 }
-export const updateProfile = (user)=>{
+export const updateProfile = (user,token)=>{
     return async (dispatch )=>{
         dispatch({
             type:UPDATE_PROFILE_REQUEST_START,
@@ -77,17 +77,22 @@ export const updateProfile = (user)=>{
             method:'PUT', 
             headers:{
                 'Content-type':'application/json',
-                'Authorization':`Bearer ${user.token}`
+                'Authorization':`Bearer ${token}`
             },
-            body:JSON.stringify(user)
+            body: JSON.stringify(user)
         }
+       
         const res = await fetch('http://localhost:3333/user/profile', configOption);
         const data = await res.json();
-        if(data&&data.name){
-            updateLocalStorageItem('user' , data)
+        if (data && data.name) {
+            console.log(data , 'update profile reducers')
+             updateLocalStorageItem(data, 'userInfo');
            return  dispatch({
                 type:UPDATE_PROFILE_SUCCESS,
-                payload:true,
+               payload: {
+                   userInfo: { ...data, token },
+                   isLoading:false
+                }
             });
         }
         return dispatch({
