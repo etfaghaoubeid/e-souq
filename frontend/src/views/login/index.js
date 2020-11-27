@@ -11,8 +11,8 @@ import Loader from '../../components/loader'
 import FormGroupComponent from '../../components/form-group'
 
 function Login({location, history}) {
-    const auth = useSelector(state=>state.auth);
-    const {error , isLoading , userInfo} = auth
+    const loginReducer = useSelector(state=>state.loginReducer);
+    const {error , isLoading , userInfo} = loginReducer
     const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password , setPassword] = useState('');

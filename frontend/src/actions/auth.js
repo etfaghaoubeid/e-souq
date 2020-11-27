@@ -1,4 +1,4 @@
-import {LOGIN_SUCCESS, FAIL_TO_LOGIN, LOGIN_REQUEST_START, REGISTER_REQUEST_START, REGISTER_SUCCESS, FAIL_TO_REGISTER, LOGOUT, UPDATE_PROFILE_REQUEST_START, UPDATE_PROFILE_SUCCESS, FAIL_TO_UPDATE_PROFILE} from '../action-types/auth'
+import {LOGIN_SUCCESS, FAIL_TO_LOGIN, LOGIN_REQUEST_START, REGISTER_REQUEST_START, REGISTER_SUCCESS, FAIL_TO_REGISTER, LOGOUT, UPDATE_PROFILE_REQUEST_START, UPDATE_PROFILE_SUCCESS, FAIL_TO_UPDATE_PROFILE, GET_PROFILE_REQUEST_START, GET_PROFILE_SUCCESS, FAIL_TO_GET_PROFILE} from '../action-types/auth'
 import { deleteLoacalStorageItem, setLocalStorageItem, updateLocalStorageItem } from '../utils/localStorage';
 export const login= (user)=> async (dispatch)=>{
     dispatch({type:LOGIN_REQUEST_START, payload:true})
@@ -11,6 +11,7 @@ export const login= (user)=> async (dispatch)=>{
     const data = await res.json();
     if(data && data.name){
         setLocalStorageItem(data, 'userInfo');
+        console.log(data, 'userinfo for login')
         return dispatch({
             type:LOGIN_SUCCESS, 
             payload:{userInfo:data , isLogin:true,isLoding:false}
@@ -44,18 +45,20 @@ export const register = (user)=>{
         const res = await fetch('http://localhost:3333/user/register', configRequest);
         const data = await res.json();
         if(data && data.name){
-            setLocalStorageItem(data , 'userInfo')
+            setLocalStorageItem(data, 'userInfo')
             dispatch({
+                type: LOGIN_SUCCESS, 
+                payload: {userInfo:data , isLogin:true,isLoding:false}
+                    
+            })
+            return dispatch({
                 type: REGISTER_SUCCESS,
                 payload: {
-                    user: data,
+                    userInfo: data,
                     isLoading: false
                 }
             });
-            return dispatch({
-                type: LOGIN_SUCCESS,
-                payload: { userInfo: data, isLogin: true, isLoding: false }
-            });
+            
         }
         return dispatch({
             type:FAIL_TO_REGISTER, 
@@ -67,7 +70,42 @@ export const register = (user)=>{
 
     }
 }
-export const updateProfile = (user,token)=>{
+export const getProfile = (_id) => async (dispatch, getState) => {
+    dispatch({
+        type: GET_PROFILE_REQUEST_START,
+        isLoading: true
+    });
+    const { auth: { userInfo } } = getState();
+    const configOption = {
+        method:'GET', 
+        headers:{
+            'Content-type':'application/json',
+            'Authorization':`Bearer ${userInfo.token}`
+        },
+    }
+    const data = await fetch(`http://localhost:3333/user/${_id}`, configOption);
+    const res = await data.json();
+    if (data && data.name) {
+       return dispatch({
+            type: GET_PROFILE_SUCCESS,
+            payload: {
+                isLoading: false, 
+                userInfo:data
+    
+            }
+        })
+    }
+    dispatch({
+        type: FAIL_TO_GET_PROFILE,
+        payload: {
+            error: data.message, 
+            isLoading:false
+        }
+    })
+
+
+}
+export const updateProfile = (user)=>{
     return async (dispatch )=>{
         dispatch({
             type:UPDATE_PROFILE_REQUEST_START,
@@ -77,7 +115,7 @@ export const updateProfile = (user,token)=>{
             method:'PUT', 
             headers:{
                 'Content-type':'application/json',
-                'Authorization':`Bearer ${token}`
+                'Authorization':`Bearer ${user.token}`
             },
             body: JSON.stringify(user)
         }
@@ -90,7 +128,7 @@ export const updateProfile = (user,token)=>{
            return  dispatch({
                 type:UPDATE_PROFILE_SUCCESS,
                payload: {
-                   userInfo: { ...data, token },
+                   userInfo: data,
                    isLoading:false
                 }
             });

@@ -11,9 +11,9 @@ const Profile =({history})=> {
     const [password, setPassword] = useState('');
     const [confimePassword , setConfimePassword] = useState('');
     const [message, setMessage] = useState(null);
-    const auth = useSelector(state=>state.auth);
+    const loginReducer = useSelector(state=>state.loginReducer);
     const dispatch = useDispatch();
-    const {userInfo , error, isLoading} =auth
+    const {userInfo , error, isLoading} =loginReducer
     const handleNameChange = (event)=>{
         setName(event.target.value);
     }
@@ -31,7 +31,7 @@ const Profile =({history})=> {
         event.preventDefault();
         console.log(userInfo.token)
         if( password && password ===confimePassword){
-            dispatch(updateProfile({ name, email, password }, userInfo.token));
+            dispatch(updateProfile({ name, email, password , token: userInfo.token}));
             history.push('/profile')
         }else{
             setMessage('Password does not match')
@@ -42,7 +42,6 @@ const Profile =({history})=> {
             setName(userInfo.name);
             setEmail(userInfo.email)
         }
-
     }, [])
     // console.log('user info for update profile', userInfo)
 

@@ -46,7 +46,12 @@ exports.updateProfile = asyncHandler(async (req, res)=>{
     const savedUser = await user.save();
     if (savedUser) {
         
-        return res.status(201).json(savedUser)
+        return res.status(200).json({
+            email:savedUser.email,
+            name:savedUser.name, 
+            id:savedUser._id,
+            token:generateToken(savedUser._id)
+        })
     }
     return res.status(404).json({message:'some things went wrong'})
 

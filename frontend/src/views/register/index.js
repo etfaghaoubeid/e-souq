@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {Button, Col, Form, Row} from 'react-bootstrap';
 import FormContainer from '../../components/form-container';
 import { Link } from 'react-router-dom';
-import {  register } from '../../actions/auth';
+import {  login, register } from '../../actions/auth';
 import Loader from '../../components/loader';
 import Message from '../../components/message';
 
@@ -15,8 +15,8 @@ const Register = ({ history , location}) => {
     const [password, setPassword] = useState('');
     const [message , setMessage] = useState('')
     const dispatch = useDispatch();
-    const auth = useSelector(state => state.auth);
-    const { userInfo, error, isLoading } = auth;
+    const registerReducer = useSelector(state => state.registerReducer);
+    const { userInfo, error, isLoading } = registerReducer;
     const redirect =  location.search.split('=')[1]||'/'
     const nameChangeHandler = (event)=>{
         setName(event.target.value);
@@ -30,6 +30,7 @@ const Register = ({ history , location}) => {
     const registerHandler= (event)=>{
         event.preventDefault();
         dispatch(register({ email, name, password }));
+        dispatch(login(email, password))
           
     }
     useEffect(() => {
