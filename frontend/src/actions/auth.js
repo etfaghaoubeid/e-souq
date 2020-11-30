@@ -73,9 +73,10 @@ export const register = (user)=>{
 export const getProfile = (_id) => async (dispatch, getState) => {
     dispatch({
         type: GET_PROFILE_REQUEST_START,
-        isLoading: true
+        payload: true
     });
-    const { auth: { userInfo } } = getState();
+    const { loginReducer: { userInfo } } = getState();
+    
     const configOption = {
         method:'GET', 
         headers:{
@@ -83,14 +84,15 @@ export const getProfile = (_id) => async (dispatch, getState) => {
             'Authorization':`Bearer ${userInfo.token}`
         },
     }
-    const data = await fetch(`http://localhost:3333/user/${_id}`, configOption);
-    const res = await data.json();
+    const res = await fetch(`http://localhost:3333/user/${_id}`, configOption);
+    const data = await res.json();
+    console.log(data, 'getprofiel action')
     if (data && data.name) {
        return dispatch({
             type: GET_PROFILE_SUCCESS,
             payload: {
                 isLoading: false, 
-                userInfo:data
+                user: { ...data, token: userInfo.token }
     
             }
         })
@@ -129,6 +131,7 @@ export const updateProfile = (user)=>{
                 type:UPDATE_PROFILE_SUCCESS,
                payload: {
                    userInfo: data,
+                   success:true,
                    isLoading:false
                 }
             });

@@ -2,7 +2,7 @@ import React from 'react';
 import { Container,Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
-import { logout } from '../../actions/auth';
+import { logout, getProfile } from '../../actions/auth';
 
 const Header = ({history}) => {
     const loginReducer = useSelector(state=>state.loginReducer);

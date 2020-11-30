@@ -1,14 +1,18 @@
-import {
+import{
+    FAIL_TO_GET_PROFILE,
     FAIL_TO_LOGIN,
     FAIL_TO_REGISTER,
     FAIL_TO_UPDATE_PROFILE,
+    GET_PROFILE_REQUEST_START,
+    GET_PROFILE_SUCCESS,
     LOGIN_REQUEST_START,
     LOGIN_SUCCESS, 
     LOGOUT, 
     REGISTER_REQUEST_START, 
     REGISTER_SUCCESS,
     UPDATE_PROFILE_REQUEST_START,
-    UPDATE_PROFILE_SUCCESS} from '../action-types/auth'
+    UPDATE_PROFILE_SUCCESS
+} from '../action-types/auth'
 
 export const loginReducer = (state = {}, action) => {
     switch (action.type) {
@@ -65,8 +69,8 @@ export const registerReducer = (state = {}, action) => {
             return state;
     }
 }
-export const profileReducer = (state = {user:{}}, action) => {
-    switch (action.state) {
+export const profileReducer = (state = {}, action) => {
+    switch (action.type) {
         
         case UPDATE_PROFILE_REQUEST_START:
             return {
@@ -77,6 +81,7 @@ export const profileReducer = (state = {user:{}}, action) => {
             return { 
                 ...state, 
                 user: action.payload.userInfo,
+                success:action.payload.success,
                 isLoading:action.payload.isLogin
             }
         case FAIL_TO_UPDATE_PROFILE:
@@ -89,21 +94,21 @@ export const profileReducer = (state = {user:{}}, action) => {
             return state;
     }
 }
-export const profileDetailsReducer = (state = {}, action) => {
+export const profileDetailsReducer = (state = {user:{}}, action) => {
     switch (action.type) {
         
-        case UPDATE_PROFILE_REQUEST_START:
+        case GET_PROFILE_REQUEST_START:
             return {
                 ...state,
                 isLoading:action.payload
             }
-        case UPDATE_PROFILE_SUCCESS:
+        case GET_PROFILE_SUCCESS:
             return { 
                 ...state, 
-                userInfo: action.payload.userInfo,
-                isLoading:action.payload.isLogin
+                user: action.payload.user,
+                isLoading:action.payload.isLoading
             }
-        case FAIL_TO_UPDATE_PROFILE:
+        case FAIL_TO_GET_PROFILE:
             return {
                 ...state, 
                 error: action.payload.error,

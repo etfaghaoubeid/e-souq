@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import {useDispatch , useSelector} from 'react-redux';
 import Message from '../../components/message';
-// import Loader from '../../components/loader';
+import Loader from '../../components/loader';
 import { Button, Col, Form,  Row } from 'react-bootstrap';
-import { updateProfile } from '../../actions/auth';
+import { updateProfile,getProfile } from '../../actions/auth';
 
 const Profile =({history})=> {
     const [name, setName ] = useState('');
@@ -11,9 +11,13 @@ const Profile =({history})=> {
     const [password, setPassword] = useState('');
     const [confimePassword , setConfimePassword] = useState('');
     const [message, setMessage] = useState(null);
-    const loginReducer = useSelector(state=>state.loginReducer);
+    const loginReducer = useSelector(state => state.loginReducer);
+    const profileDetailsReducer = useSelector(state => state.profileDetailsReducer);
+    const profileReducer = useSelector(state => state.profileReducer);
+    const { success } = profileReducer;
     const dispatch = useDispatch();
-    const {userInfo , error, isLoading} =loginReducer
+    const { userInfo, error,  } = loginReducer;
+    const {user,isLoading} =  profileDetailsReducer
     const handleNameChange = (event)=>{
         setName(event.target.value);
     }
@@ -29,7 +33,6 @@ const Profile =({history})=> {
     
     const handleSubmit =(event)=>{
         event.preventDefault();
-        console.log(userInfo.token)
         if( password && password ===confimePassword){
             dispatch(updateProfile({ name, email, password , token: userInfo.token}));
             history.push('/profile')
@@ -38,20 +41,29 @@ const Profile =({history})=> {
         }
     }
     useEffect(()=>{
-        if(userInfo){
-            setName(userInfo.name);
-            setEmail(userInfo.email)
+        if (!userInfo) {
+            history.push('/login')
+        } else {
+            if (!user.name) {
+                dispatch(getProfile('profile'))
+                
+            } else {
+                setName(user.name);
+                setEmail(user.email)
+            }
         }
-    }, [])
-    // console.log('user info for update profile', userInfo)
+
+    }, [user , userInfo,message, success])
 
     return (
         <Row>
             <Col md={4}> 
                 <h3>Profile</h3>
-                {message&&<Message>{message}</Message>}
-
-                <Form onSubmit={handleSubmit}>
+                {message && <Message>{message}</Message>}
+                {success&&<Message variant='success'>profile updated succesafuly</Message>}
+                
+                {isLoading ? <Loader /> : (
+                    <Form onSubmit={handleSubmit}>
                     <Form.Group>
                         <Form.Label controlId='name'>
                             Name
@@ -96,6 +108,9 @@ const Profile =({history})=> {
                     <Button type='submit' > Update</Button>
 
                 </Form>
+                    
+                )}
+                
 
             </Col>
             <Col md={8}>
