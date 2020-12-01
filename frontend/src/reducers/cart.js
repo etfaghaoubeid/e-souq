@@ -10,7 +10,7 @@ function decreaseQty(items , _id){
        }
        removeItemFromLocalStorage(_id);
        return items.filter(item=>item._id !==product._id)
-
+ 
 }
 function addItem(items, itemToAdd){
    const existItem = items.find(item=>item._id ===itemToAdd._id);
