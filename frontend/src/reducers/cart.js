@@ -1,7 +1,7 @@
 import { ADD_ITEM_TO_CART, DECREASE_QUANTITY, INCREASE_QUANTITY, REMOVE_ITEM_FROM_CART } from "../action-types/cart";
 
 const initState = {
-    itemsInCart:[],
+    itemsInCart:[], 
 }
 function decreaseQty(items , _id){
        const product =  items.find(item=>item._id ==_id);
