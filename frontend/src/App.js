@@ -10,6 +10,7 @@ import Login from './views/login';
 import Register from './views/register';
 import Profile from './views/profile'
 import Shipping from './views/shipping';
+import Payment from './views/payment';
 
 
 
@@ -22,7 +23,8 @@ function App() {
       <main className='py-3' >
         <Container>
           <Route exact path='/' component={Home} />
-          <Route path ='/shipping' component={Shipping}/>
+          <Route path='/shipping' component={Shipping} />
+          <Route path='/payment' component={Payment}/>
           <Route path= '/login' component={Login}/>
           <Route path='/register' component={Register}/>
           <Route path='/profile' component={Profile}/>

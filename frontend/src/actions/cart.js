@@ -1,4 +1,7 @@
-import { ADD_ITEM_TO_CART, INCREASE_QUANTITY,DECREASE_QUANTITY, REMOVE_ITEM_FROM_CART } from "../action-types/cart"
+import {
+    ADD_ITEM_TO_CART,SAVR_PAYMENT_METHOD,
+    SAVE_SHIPPING_ADDRESS,INCREASE_QUANTITY, DECREASE_QUANTITY, REMOVE_ITEM_FROM_CART
+} from "../action-types/cart"
 
 export const addToCart =(id,qty)=>async (dispach, getState)=>{
     const  res = await fetch(`http://127.0.0.1:3333/products/${id}`);
@@ -23,8 +26,21 @@ export const increaseQuantity = (id)=>{
     }
 };
 export const decreaseQuantity=(id)=>{
-    return {
+    return{
         type:DECREASE_QUANTITY, 
         payload:id
+    }
+}
+export const saveSippingAddress = (data) => (dispatch) => {
+    dispatch({
+        type: SAVE_SHIPPING_ADDRESS,
+        payload: data
+    })
+    localStorage.setItem('shipping', JSON.stringify(data));
+};
+export const savePayment = (data) => {
+    return {
+        type: SAVR_PAYMENT_METHOD, 
+        payload:data
     }
 }

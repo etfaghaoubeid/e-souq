@@ -1,4 +1,4 @@
-import { ADD_ITEM_TO_CART, DECREASE_QUANTITY, INCREASE_QUANTITY, REMOVE_ITEM_FROM_CART } from "../action-types/cart";
+import { ADD_ITEM_TO_CART, DECREASE_QUANTITY, INCREASE_QUANTITY, REMOVE_ITEM_FROM_CART, SAVE_SHIPPING_ADDRESS } from "../action-types/cart";
 
 const initState = {
     itemsInCart:[], 
@@ -54,6 +54,11 @@ export default function cartReducer(state=initState, action){
                 ...state,
                 itemsInCart:decreaseQty(state.itemsInCart , action.payload)
 
+            }
+        case SAVE_SHIPPING_ADDRESS:
+            return {
+                ...state, 
+                shippingAdress: action.payload
             }
 
         default:
