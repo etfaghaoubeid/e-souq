@@ -11,6 +11,7 @@ import Register from './views/register';
 import Profile from './views/profile'
 import Shipping from './views/shipping';
 import Payment from './views/payment';
+import PlaceOrder from './views/palece-order';
 
 
 
@@ -24,6 +25,7 @@ function App() {
         <Container>
           <Route exact path='/' component={Home} />
           <Route path='/shipping' component={Shipping} />
+          <Route path='/placeorder' component={PlaceOrder}/>
           <Route path='/payment' component={Payment}/>
           <Route path= '/login' component={Login}/>
           <Route path='/register' component={Register}/>

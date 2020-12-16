@@ -3,7 +3,7 @@ import { Col, Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import CheckOutSteps from '../../components/checkout-steps';
 import FormContainer from '../../components/form-container';
-import {savePayment} from '../../actions/cart'
+import {savePaymentMethod} from '../../actions/cart'
 const Payment = ({ history}) => {
     const dispatch = useDispatch();
     const cart = useSelector(state => state.cart);
@@ -14,7 +14,8 @@ const Payment = ({ history}) => {
     const [paymentMethod, setPaymentMethod] = useState('PayPal');
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(savePayment({paymentMethod}))
+        dispatch(savePaymentMethod(paymentMethod ))
+        history.push('/placeorder');
     }
     return (
         <FormContainer>
@@ -23,7 +24,7 @@ const Payment = ({ history}) => {
             <Form onSubmit={handleSubmit}>
                 <Form.Group>
                     <Form.Label as='legend'>
-                       Select Method
+                       Select Method 
                     </Form.Label>
                 </Form.Group>
                 <Col>
@@ -36,7 +37,7 @@ const Payment = ({ history}) => {
 
                     </Form.Check>
                 </Col>
-                <Button className='mt-3'>Next</Button>
+                <Button  type='submit'  className='mt-3'>Next</Button>
 
             </Form>
         
@@ -44,4 +45,4 @@ const Payment = ({ history}) => {
         </FormContainer>
     )
 }
-export default Payment;
+export default Payment;    

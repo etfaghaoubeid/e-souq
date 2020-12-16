@@ -38,9 +38,10 @@ export const saveSippingAddress = (data) => (dispatch) => {
     })
     localStorage.setItem('shipping', JSON.stringify(data));
 };
-export const savePayment = (data) => {
-    return {
-        type: SAVR_PAYMENT_METHOD, 
-        payload:data
-    }
+export const savePaymentMethod = (data) =>dispatch=> {
+    localStorage.setItem('paymentMethod', JSON.stringify(data));
+    dispatch({
+        type: SAVR_PAYMENT_METHOD,
+        payload: data
+    });
 }
