@@ -17,9 +17,9 @@ const ProductDetails = ({match,history}) => {
     useEffect(()=>{
        dispatch(getProduct(id))
        
-    },[dispatch])
+    },[id])
 
-    const addToCartHendler = ()=>{
+    const addToCartHendler = () => {
         dispatch(addToCart(id,qty))
         history.push(`/cart/${id}?qty=${qty}`)
     }
@@ -94,7 +94,7 @@ const ProductDetails = ({match,history}) => {
                                 </ListGroup.Item>
                             }
                             <ListGroup.Item>
-                                    <Button onClick={addToCartHendler}eclassName='btn btn-block' disabled={product.countInStock===0}>Add To Cart</Button>
+                                    <Button onClick={addToCartHendler} className='btn btn-block' disabled={product.countInStock===0}>Add To Cart</Button>
                             </ListGroup.Item>
                         </ListGroup>
                     </Card>

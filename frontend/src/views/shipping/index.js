@@ -7,11 +7,12 @@ import CheckOutSteps from '../../components/checkout-steps';
 function Shipping({history}) {
     const dispatch = useDispatch();
     const cart = useSelector(state => state.cart);
+    const {shippingAdress} = cart
     const { shipping } = cart;
-    const [address, setAddress] = useState(shipping.address);
-    const [city, setCity] = useState(shipping.city);
-    const [postalCode, setPostalCode] = useState(shipping.postalCode);
-    const [country, setCountry] = useState(shipping.country);
+    const [address, setAddress] = useState(shippingAdress? shippingAdress.address:'');
+    const [city, setCity] = useState(shippingAdress? shippingAdress.city:'');
+    const [postalCode, setPostalCode] = useState(shippingAdress?shippingAdress.postalCode:'');
+    const [country, setCountry] = useState(shippingAdress?shippingAdress.country:'');
     
     const handleSubmit = (event) => {
         event.preventDefault();

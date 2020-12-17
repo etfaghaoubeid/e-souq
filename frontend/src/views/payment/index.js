@@ -37,7 +37,7 @@ const Payment = ({ history}) => {
 
                     </Form.Check>
                 </Col>
-                <Button  type='submit'  className='mt-3'>Next</Button>
+                <Button type='submit'  className='mt-3'>Next</Button>
 
             </Form>
         

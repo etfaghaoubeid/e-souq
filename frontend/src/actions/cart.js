@@ -5,7 +5,7 @@ import {
 
 export const addToCart =(id,qty)=>async (dispach, getState)=>{
     const  res = await fetch(`http://127.0.0.1:3333/products/${id}`);
-    const data =await  res.json();
+    const data = await res.json();
     dispach({
          type:ADD_ITEM_TO_CART, 
         payload:{...data , qty:parseInt(qty)}
@@ -36,7 +36,7 @@ export const saveSippingAddress = (data) => (dispatch) => {
         type: SAVE_SHIPPING_ADDRESS,
         payload: data
     })
-    localStorage.setItem('shipping', JSON.stringify(data));
+    localStorage.setItem('shippingAddress', JSON.stringify(data));
 };
 export const savePaymentMethod = (data) =>dispatch=> {
     localStorage.setItem('paymentMethod', JSON.stringify(data));

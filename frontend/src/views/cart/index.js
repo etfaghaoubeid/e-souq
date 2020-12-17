@@ -18,11 +18,6 @@ function Cart({match, history , location}) {
         history.push('/cart')
         dispatch(decreaseQuantity(id))
     }
-    useEffect(()=>{
-        if(id){
-            dispatch(addToCart(id , qty))
-        }
-    },[qty , dispatch , id])
     const handleCheckout = ()=>{
         history.push('/login?redirect=shipping')
     }

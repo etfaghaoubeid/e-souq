@@ -15,9 +15,15 @@ function decreaseQty(items , _id){
 function addItem(items, itemToAdd){
    const existItem = items.find(item=>item._id ===itemToAdd._id);
    if(existItem){
-       return items
+       return items.map((item) => {
+           if (item._id === existItem._id) {
+               return {...item, qty:item.qty+1}
+           } else {
+               return item
+           }
+       })
    }else{
-       return [...items , itemToAdd]
+       return [...items, itemToAdd]
    }
 }
 function removeItemFromLocalStorage (_id){
@@ -33,7 +39,13 @@ export default function cartReducer(state=initState, action){
             console.log('payload add item to cart ', action.payload._id)
             return{
                 ...state, 
-                itemsInCart:addItem(state.itemsInCart , action.payload),
+                itemsInCart:state.itemsInCart.length>0? state.itemsInCart.map((item) => {
+                    if (item._id == action.payload._id) {
+                        return {...item, qty: item.qty+1}
+                    } else {
+                        return item
+                    }
+                }):[...state.itemsInCart , action.payload]//addItem(state.itemsInCart , action.payload),
             }
 
         case REMOVE_ITEM_FROM_CART:
@@ -58,7 +70,7 @@ export default function cartReducer(state=initState, action){
         case SAVE_SHIPPING_ADDRESS:
             return {
                 ...state, 
-                shippingAdress: action.payload
+                shippingAddress: action.payload
             }
         case SAVR_PAYMENT_METHOD:
             return {
