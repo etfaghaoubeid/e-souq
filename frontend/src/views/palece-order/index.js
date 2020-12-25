@@ -1,10 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Col, Row, ListGroup , Image, Card} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../../components/message'
 import CheckOutSteps from '../../components/checkout-steps'
 const PlaceOrder = ({ }) => {
     const cart = useSelector(state => state.cart);
+    console.log(cart )
     const { shippingAddress: { country, city, address }, paymentMethod ,itemsInCart} = cart
     return (
         <>
@@ -37,7 +39,16 @@ const PlaceOrder = ({ }) => {
                                         <ListGroup.Item key={idx}>
                                             <Row>
                                                 <Col md={1}>
-                                                    
+                                                    <Image src={item.image} alt={item.name} />
+                                                </Col>
+                                                <Col>
+                                                    <Link to={`/product/${item.product}`}>
+                                                        {item.name}
+                                                    </Link>
+                                                
+                                                </Col>
+                                                <Col md={4}>
+                                                    {item.qty} * ${item.price}
                                                 </Col>
                                             </Row>
                                         </ListGroup.Item>
@@ -47,6 +58,24 @@ const PlaceOrder = ({ }) => {
                             }
                         </ListGroup.Item>
                     </ListGroup>
+                </Col>
+                <Col md={4}>
+                    <Card>
+                        <ListGroup variant='flush'>
+                            <ListGroup.Item>
+                                <h3>Order Summary</h3>
+                            </ListGroup.Item>
+                            <ListGroup.Item>
+                                <Row>
+                                    <Col>
+                                        Items
+                                    </Col>
+                                    <Col>${cart.cartItemsPrice }</Col>
+                                </Row>
+                            </ListGroup.Item>
+
+                        </ListGroup>
+                    </Card>
                 </Col>
             </Row>
             

@@ -7,9 +7,9 @@ const middleware = [thunk ]
 const  userInfo = getLocalStorageItem('userInfo')? getLocalStorageItem('userInfo'):''
 
 const itemsInCart = JSON.parse(localStorage.getItem('itemsInCart')) || []
-const shippingInfo = JSON.parse( localStorage.getItem('shippingAddress')) || {}
+const shippingAddressInfo = JSON.parse( localStorage.getItem('shippingAddress'))? JSON.parse( localStorage.getItem('shippingAddress')): {address:'', city:'',postalCode:'', country:''}
 const initSatate ={
-    cart:{itemsInCart, shippingAddress:shippingInfo},
+    cart: { itemsInCart , shippingAddress:shippingAddressInfo},
     auth:{userInfo}
 }
 const store = createStore(rootReducer ,initSatate,composeWithDevTools(applyMiddleware(...middleware)))

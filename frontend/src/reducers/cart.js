@@ -36,7 +36,6 @@ function removeItemFromLocalStorage (_id){
 export default function cartReducer(state=initState, action){
     switch(action.type){
         case ADD_ITEM_TO_CART:
-            console.log('payload add item to cart ', action.payload._id)
             return{
                 ...state, 
                 itemsInCart:state.itemsInCart.length>0? state.itemsInCart.map((item) => {

@@ -7,26 +7,25 @@ import CheckOutSteps from '../../components/checkout-steps';
 function Shipping({history}) {
     const dispatch = useDispatch();
     const cart = useSelector(state => state.cart);
-    const {shippingAdress} = cart
-    const { shipping } = cart;
-    const [address, setAddress] = useState(shippingAdress? shippingAdress.address:'');
-    const [city, setCity] = useState(shippingAdress? shippingAdress.city:'');
-    const [postalCode, setPostalCode] = useState(shippingAdress?shippingAdress.postalCode:'');
-    const [country, setCountry] = useState(shippingAdress?shippingAdress.country:'');
-    
+    const {shippingAddress} = cart
+    const [address, setAddress] = useState( shippingAddress.address);
+    const [city, setCity] = useState( shippingAddress.city);
+    const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
+    const [country, setCountry] = useState(shippingAddress.country);
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(saveSippingAddress({ address, city, postalCode, country }));
         history.push('/payment');
+        dispatch(saveSippingAddress({ address, city, postalCode, country }));
+        console.log(history.push, 'histryyyy shipping ');
+        
     }
     return (
-     
         <FromContainer>
             <CheckOutSteps step1 step2/>
-
             <h1>Shipping</h1>
             <Form onSubmit={handleSubmit}>
-                <Form.Group controlId='City'>
+                <Form.Group controlid='City'>
                     <Form.Label>City</Form.Label>
                     <Form.Control
                         type='text'
@@ -36,7 +35,7 @@ function Shipping({history}) {
                     >
                     </Form.Control>
                 </Form.Group>
-                <Form.Group controlId='address'>
+                <Form.Group controlid='address'>
                     <Form.Label>Address</Form.Label>
                     <Form.Control
                         type='text'
@@ -47,7 +46,7 @@ function Shipping({history}) {
                     >
                     </Form.Control>
                 </Form.Group>
-                <Form.Group controlId='postalCode'>
+                <Form.Group controlid='postalCode'>
                     <Form.Label>PostalCode</Form.Label>
                     <Form.Control
                         type='number'
@@ -57,7 +56,7 @@ function Shipping({history}) {
                     >
                     </Form.Control>
                 </Form.Group>
-                <Form.Group controlId='country'>
+                <Form.Group controlid='country'>
                     <Form.Label>Country</Form.Label>
                     <Form.Control
                         type='text'
