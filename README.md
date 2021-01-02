@@ -1,2 +1,2 @@
 # e-souq
-electronic shop .
+electronic shopping 
