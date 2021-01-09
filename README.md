@@ -1,2 +1,2 @@
 # e-souq
-electronic shopping 
+electronic shopping 🛍 
