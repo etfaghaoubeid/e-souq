@@ -2,4 +2,4 @@
 electronic shopping 🛍 
 ## features:
 add item to your cart.
-Shipping
+Shippingy
