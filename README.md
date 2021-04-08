@@ -1,5 +1,4 @@
 # e-souq
 electronic shopping 🛍 
 ## features:
-add item to your cart.
-Shippingy
+add item to your cart
